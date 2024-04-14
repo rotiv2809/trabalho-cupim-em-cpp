@@ -1,0 +1,13 @@
+Aluno: joao
+    Codigo: 22022
+    cpf: 38035203800
+    Materias cursadas: 
+         Codigo: 
+            Nome: 
+            Professor: 
+            Creditos: 
+         Codigo: 2121
+            Nome: mopas
+            Professor: olhor
+            Creditos: 2
+
