@@ -23,29 +23,101 @@ public:
     vector<disciplina> disciplinas_cursadas;
 };
 
-void adicionarDisciplina(aluno &aluno, int index) {
-    disciplina nova_disciplina;
-    cout << "Digite o codigo da disciplina " << index + 1 << ": ";
-    cin >> nova_disciplina.codigo_disciplina;
-    cout << "Digite o nome da disciplina " << index + 1 << ": ";
-    cin >> nova_disciplina.nome_disciplina;
-    cout << "Digite o professor da disciplina " << index + 1 << ": ";
-    cin >> nova_disciplina.professor;
-    cout << "Digite a quantidade de creditos da disciplina " << index + 1 << ": ";
-    cin >> nova_disciplina.creditos;
-    aluno.disciplinas_cursadas.push_back(nova_disciplina);
-    nova_disciplina.alunos_na_disciplina.push_back(aluno);
+void adicionarDisciplina(vector <disciplina> &disciplina) {
+    class aluno novo_aluno;
+    class disciplina disciplina_nova;
+    string nome_do_aluno;
+    int numero_de_alunos;
+    disciplina.push_back(disciplina_nova);
+    cout << "Digite o nome da disciplina (letras todas minusculas):";
+            cin >> disciplina[-1].nome_disciplina;
+            cout << "Digite o codigo da disciplina: ";
+            cin >> disciplina[-1].codigo_disciplina;
+            cout << "Digite o professor da disciplina: ";
+            cin >> disciplina[-1].professor;
+            cout << "Quantos creditos ha na disciplina?";
+            cin >> disciplina[-1].creditos;
+            cout << "Quantos alunos deseja cadastrar nessa disciplina?";
+            cin >> numero_de_alunos;
+            for (int j = 0; j < numero_de_alunos; j++) {
+                cout << "Coloque o nome do " << j+1 << " aluno (letras todas minusculas):";
+                cin >> nome_do_aluno;
+                disciplina[-1].alunos_na_disciplina.push_back(novo_aluno);
+                disciplina[-1].alunos_na_disciplina[-1].nome_aluno = nome_do_aluno;
+            }
 }
 
+void adicionarAluno(vector <class aluno> &alunos){
+    class aluno novo_aluno;
+    class disciplina disciplina_nova;
+    string nome_da_disciplina;
+    int numero_de_disciplinas;
+    alunos.push_back(novo_aluno);
+    cout << "Digite o nome do aluno (letras todas minusculas):";
+            cin >> alunos[-1].nome_aluno;
+            cout << "Digite o codigo do aluno: ";
+            cin >> alunos[-1].codigo_aluno;
+            cout << "Digite o cpf do aluno (apenas numeros): ";
+            cin >> alunos[-1].cpf;
+            cout << "Quantas disciplinas deseja cadastrar o aluno?";
+            cin >> numero_de_disciplinas;
+            for (int j = 0; j < numero_de_disciplinas; j++) {
+                cout << "Coloque o nome da " << j+1 << " disciplina (letras todas minusculas):";
+                cin >> nome_da_disciplina;
+                alunos[-1].disciplinas_cursadas.push_back(disciplina_nova);
+                alunos[-1].disciplinas_cursadas[-1].nome_disciplina = nome_da_disciplina;
+            }
+}
 
-void removerDisciplina(aluno& aluno, int index_aluno, int index) {
-    if (index >= 0 && index < aluno.disciplinas_cursadas.size()) {
-        aluno.disciplinas_cursadas[index].alunos_na_disciplina.erase(aluno.disciplinas_cursadas[index].alunos_na_disciplina.begin() + index_aluno);
-        aluno.disciplinas_cursadas.erase(aluno.disciplinas_cursadas.begin() + index);
-        cout << "Disciplina removida com sucesso!\n";
-    } else {
-        cout << "Indice de disciplina invalido.\n";
+int removerDisciplina(vector <aluno> &alunos, string nome_disciplina, string nome_do_aluno) {
+    int tamanho = alunos.size();
+    int tamanho_2;
+    for (int i = 0; i < tamanho; i++)
+    {
+        if (alunos[i].nome_aluno == nome_do_aluno)
+        {
+            tamanho_2 = alunos[i].disciplinas_cursadas.size();
+            for (int j = 0; j < tamanho_2; j++)
+            {
+                if (alunos[i].disciplinas_cursadas[j].nome_disciplina == nome_disciplina)
+                {
+                    alunos[i].disciplinas_cursadas.erase(alunos[i].disciplinas_cursadas.begin() + j);
+                    return 1;
+                }
+            }
+            cout << "nao encontrou a disciplina";
+            return 0;    
+        }    
     }
+    cout << "nao encontrou o aluno";
+    return 0;
+}
+
+int removerAluno(vector <aluno> &alunos, vector <disciplina> &disciplina, string codigo_aluno){
+    int tamanho = alunos.size();
+    int tamanho_disciplina = disciplina.size();
+    int tamanho_3;
+    for (int i = 0; i < tamanho_disciplina; i++)
+    {
+        tamanho_3 = disciplina[i].alunos_na_disciplina.size();
+        for (int j = 0; j < tamanho_3; j++)
+        {
+            if (disciplina[i].alunos_na_disciplina[j].codigo_aluno == codigo_aluno)
+            {
+                disciplina[i].alunos_na_disciplina.erase(disciplina[i].alunos_na_disciplina.begin() + j);
+            }
+        }
+    }
+    for (int i = 0; i < tamanho; i++)
+    {
+        if (alunos[i].codigo_aluno == codigo_aluno)
+        {
+            alunos.erase(alunos.begin() + i);
+            return 1;
+        }
+    }
+    cout << "aluno nao cadastrado";
+    return 0;
 }
 
 int main() {
