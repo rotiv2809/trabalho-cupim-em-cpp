@@ -23,6 +23,40 @@ public:
     vector<disciplina> disciplinas_cursadas;
 };
 
+void escrever_no_arquivo_bonito(string nome_do_arquivo,vector<class aluno> &alunos, vector<class disciplina> &disciplinas){
+    ofstream arquivo;
+    arquivo.open(nome_do_arquivo+"_formatado",ios::out|ios::trunc);
+    if(arquivo.is_open()){
+        arquivo << "ALUNOS:" <<endl;
+        for(int i=0;i<alunos.size();i++){
+            arquivo << "Codigo: " << alunos[i].codigo_aluno << endl;
+            arquivo << "Nome: " << alunos[i].nome_aluno << endl;
+            arquivo << "Cpf: " << alunos[i].cpf << endl;
+            arquivo << "Disciplinas Cursadas: "<<endl;
+            for(int j=0;j<alunos[i].disciplinas_cursadas.size();j++){
+                arquivo << "-" << alunos[i].disciplinas_cursadas[j].nome_disciplina<<endl;
+            }
+            arquivo << "\n\n" << endl;
+        }
+        arquivo << "DISCIPLINAS:\n";
+        for(int i=0;i<disciplinas.size();i++){
+            arquivo << "Codigo: " << disciplinas[i].codigo_disciplina << endl;
+            arquivo << "Nome: " << disciplinas[i].nome_disciplina << endl;
+            arquivo << "Professor: " << disciplinas[i].professor << endl;
+            arquivo << "Creditos: " << disciplinas[i].creditos << endl;
+            arquivo << "Alunos cursando a materia:" <<endl;
+            for(int j=0;j<disciplinas[i].alunos_na_disciplina.size();j++){
+                arquivo << "-" << disciplinas[i].alunos_na_disciplina[j].nome_aluno << endl;
+            }
+            arquivo << endl;
+        }
+    }
+    else{
+        cout << "falha na abertura do arquivo";
+    }
+    arquivo.close();
+}
+
 void escrever_no_arquivo(string nome_do_arquivo,vector<class aluno> &alunos, vector<class disciplina> &disciplinas){
     ofstream arquivo;
     arquivo.open(nome_do_arquivo,ios::out|ios::trunc);
@@ -158,6 +192,10 @@ void adicionarDisciplina(vector <disciplina> &disciplina,vector <aluno> &alunos)
     for (int j = 0; j < numero_de_alunos; j++) {
         cout << "Coloque o nome do " << j+1 << " aluno (letras todas minusculas):";
         cin >> nome_do_aluno;
+        disciplina[size-1].alunos_na_disciplina.push_back(novo_aluno);
+        size2=disciplina[size-1].alunos_na_disciplina.size();
+        disciplina[size-1].alunos_na_disciplina[size2-1].nome_aluno = nome_do_aluno;
+        if(!alunos.empty()){
         for (int i = 0; i < alunos.size(); i++)
         {
             if (alunos[i].nome_aluno == nome_do_aluno)
@@ -168,14 +206,13 @@ void adicionarDisciplina(vector <disciplina> &disciplina,vector <aluno> &alunos)
         }
         if (k==1)
         {
-            for (int l = 0; l < alunos[m].disciplinas_cursadas.size(); l++)
+            for (int l = 0; l < disciplina.size(); l++)
             {
                 if (alunos[m].disciplinas_cursadas[l].nome_disciplina == disciplina[size-1].nome_disciplina)
                 {
-                    cout << "o aluno " <<  alunos[m].nome_aluno << "ja se encontra na disciplina" << alunos[m].disciplinas_cursadas[l].nome_disciplina << '\n';
                     k = 0;
+                    break;
                 }
-                break;
             }
             if (k != 0)
             {
@@ -185,9 +222,7 @@ void adicionarDisciplina(vector <disciplina> &disciplina,vector <aluno> &alunos)
         else{
             alunos[j].disciplinas_cursadas.push_back(disciplina[size - 1]);
         }
-        disciplina[size-1].alunos_na_disciplina.push_back(novo_aluno);
-        size2=disciplina[size-1].alunos_na_disciplina.size();
-        disciplina[size-1].alunos_na_disciplina[size2-1].nome_aluno = nome_do_aluno;
+        }
     }
 }
 
@@ -196,42 +231,60 @@ void adicionarAluno(vector <class aluno> &alunos, vector <class disciplina> &dis
     class disciplina disciplina_nova;
     string nome_da_disciplina;
     int numero_de_disciplinas;
+
     alunos.push_back(novo_aluno);
     int k = 0, m;
     int size;
     int size2;
     size=alunos.size();
     cout << "Digite o nome do aluno (letras todas minusculas):";
-            cin >> alunos[size-1].nome_aluno;
-            cout << "Digite o codigo do aluno: ";
-            cin >> alunos[size-1].codigo_aluno;
-            cout << "Digite o cpf do aluno (apenas numeros): ";
-            cin >> alunos[size-1].cpf;
-            cout << "Quantas disciplinas deseja cadastrar o aluno?";
-            cin >> numero_de_disciplinas;
-            for (int j = 0; j < numero_de_disciplinas; j++) {
-                cout << "Coloque o nome da " << j+1 << " disciplina (letras todas minusculas):";
-                cin >> nome_da_disciplina;
-                alunos[size-1].disciplinas_cursadas.push_back(disciplina_nova);
-                size2=alunos[size-1].disciplinas_cursadas.size();
-                alunos[size-1].disciplinas_cursadas[size2-1].nome_disciplina = nome_da_disciplina;
-                for (int i = 0; i < disciplina.size(); i++)
+    cin >> alunos[size-1].nome_aluno;
+    cout << "Digite o codigo do aluno: ";
+    cin >> alunos[size-1].codigo_aluno;
+    cout << "Digite o cpf do aluno (apenas numeros): ";
+    cin >> alunos[size-1].cpf;
+    cout << "Quantas disciplinas deseja cadastrar o aluno?";
+    cin >> numero_de_disciplinas;
+        
+        
+        for (int j = 0; j < numero_de_disciplinas; j++) {
+            cout << "Coloque o nome da " << j+1 << " disciplina (letras todas minusculas):";
+            cin >> nome_da_disciplina;
+            alunos[size-1].disciplinas_cursadas.push_back(disciplina_nova);
+            size2=alunos[size-1].disciplinas_cursadas.size();
+            alunos[size-1].disciplinas_cursadas[size2-1].nome_disciplina = nome_da_disciplina;
+            size=alunos.size();
+            if(!disciplina.empty()){
+            for (int i = 0; i < disciplina.size(); i++)           
+            {
+                if (disciplina[i].nome_disciplina == nome_da_disciplina)
                 {
-                    if (disciplina[i].nome_disciplina == nome_da_disciplina)
+                    k++;
+                    m = i;
+                }
+            }
+            if (k==1)
+                {
+                for (int l = 0; l < alunos.size(); l++)
+                {
+                    if (disciplina[m].alunos_na_disciplina[l].nome_aluno == alunos[size-1].nome_aluno)
                     {
-                        m = i;
-                        k++;
+                        k = 0;
+                        break;
                     }
                 }
-                if (k == 0)
+                if (k != 0)
                 {
-                    disciplina.push_back(disciplina_nova);
-                    disciplina[disciplina.size() - 1].alunos_na_disciplina.push_back(novo_aluno);
+                    disciplina[m].alunos_na_disciplina.push_back(alunos[size - 1]);
                 }
-                else{
-                    disciplina[m].alunos_na_disciplina.push_back(novo_aluno);
-                } 
             }
+            else{
+                disciplina[j].alunos_na_disciplina.push_back(alunos[size - 1]);
+            }
+            }
+        
+                 
+    }
 }
 
 int adicionardisciplinaaoaluno(vector <class aluno> &alunos,vector <class disciplina> &disciplinas,string nome_da_disciplina,string codigo_aluno){
@@ -406,6 +459,7 @@ int main() {
         cin >> continuar;
     }
     escrever_no_arquivo(nome_de_arquivo,alunos,disciplinas);
+    escrever_no_arquivo_bonito(nome_de_arquivo,alunos,disciplinas);
     return 0;
 }
 
