@@ -1,3 +1,7 @@
+//Cutrim-22027
+//Zielinski-22063
+
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -316,13 +320,22 @@ int adicionardisciplinaaoaluno(vector <class aluno> &alunos,vector <class discip
 int removerDisciplina(vector <aluno> &alunos, vector <disciplina> &disciplina, string nome_disciplina, string codigo_aluno) {
     int tamanho = alunos.size();
     int tamanho_2;
+    string nome_do_aluno;
+    for (int i = 0; i < tamanho; i++)
+    {
+        if (alunos[i].codigo_aluno == codigo_aluno)
+        {
+            nome_do_aluno=alunos[i].nome_aluno;
+        }
+    }
+    
     if (!disciplina.empty())
     {
         for (int i = 0; i < disciplina.size(); i++)
         {
             if (disciplina[i].nome_disciplina == nome_disciplina)
             {
-                for (int j = 0; j < disciplina[0].alunos_na_disciplina.size(); j++)
+                for (int j = 0; j < disciplina[i].alunos_na_disciplina.size(); j++)
                 {
                     if (disciplina[i].alunos_na_disciplina[j].codigo_aluno == codigo_aluno)
                     {
@@ -361,13 +374,22 @@ int removerAluno(vector <aluno> &alunos, vector <disciplina> &disciplina, string
     int tamanho = alunos.size();
     int tamanho_disciplina = disciplina.size();
     int tamanho_3;
+    string nome_do_aluno;
+    for (int i = 0; i < tamanho; i++)
+    {
+        if (alunos[i].codigo_aluno == codigo_aluno)
+        {
+            nome_do_aluno=alunos[i].nome_aluno;
+        }
+    }
     if (!disciplina.empty())
     {
         for (int i = 0; i < disciplina.size(); i++)
         {
-                for (int j = 0; j < disciplina[0].alunos_na_disciplina.size(); j++)
+                for (int j = 0; j < disciplina[i].alunos_na_disciplina.size(); j++)
                 {
-                    if (disciplina[i].alunos_na_disciplina[j].codigo_aluno == codigo_aluno)
+                    
+                    if (disciplina[i].alunos_na_disciplina[j].nome_aluno == nome_do_aluno)
                     {
                         disciplina[i].alunos_na_disciplina.erase(disciplina[i].alunos_na_disciplina.begin() + j);
                     }
@@ -405,7 +427,7 @@ int ver_os_alunos(vector<disciplina> disciplinas,string codigo_disciplina){
         if(disciplinas[i].codigo_disciplina==codigo_disciplina){
             size2=disciplinas[i].alunos_na_disciplina.size();
             for(int j=0;j<size2;j++){
-                cout << disciplinas[i].alunos_na_disciplina[j].nome_aluno;
+                cout << disciplinas[i].alunos_na_disciplina[j].nome_aluno <<" ";
             }
             return(1);
 
@@ -494,4 +516,6 @@ int main() {
     escrever_no_arquivo_bonito(nome_de_arquivo,alunos,disciplinas);
     return 0;
 }
+
+
 
