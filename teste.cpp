@@ -313,9 +313,27 @@ int adicionardisciplinaaoaluno(vector <class aluno> &alunos,vector <class discip
     return(0);
 }
 
-int removerDisciplina(vector <aluno> &alunos, string nome_disciplina, string codigo_aluno) {
+int removerDisciplina(vector <aluno> &alunos, vector <disciplina> &disciplina, string nome_disciplina, string codigo_aluno) {
     int tamanho = alunos.size();
     int tamanho_2;
+    if (!disciplina.empty())
+    {
+        for (int i = 0; i < disciplina.size(); i++)
+        {
+            if (disciplina[i].nome_disciplina == nome_disciplina)
+            {
+                for (int j = 0; j < disciplina[0].alunos_na_disciplina.size(); j++)
+                {
+                    if (disciplina[i].alunos_na_disciplina[j].codigo_aluno == codigo_aluno)
+                    {
+                        disciplina[i].alunos_na_disciplina.erase(disciplina[i].alunos_na_disciplina.begin() + j);
+                    }
+                }
+            }
+            
+        }
+    }
+    
     for (int i = 0; i < tamanho; i++)
     {
         if (alunos[i].codigo_aluno == codigo_aluno)
@@ -343,6 +361,20 @@ int removerAluno(vector <aluno> &alunos, vector <disciplina> &disciplina, string
     int tamanho = alunos.size();
     int tamanho_disciplina = disciplina.size();
     int tamanho_3;
+    if (!disciplina.empty())
+    {
+        for (int i = 0; i < disciplina.size(); i++)
+        {
+                for (int j = 0; j < disciplina[0].alunos_na_disciplina.size(); j++)
+                {
+                    if (disciplina[i].alunos_na_disciplina[j].codigo_aluno == codigo_aluno)
+                    {
+                        disciplina[i].alunos_na_disciplina.erase(disciplina[i].alunos_na_disciplina.begin() + j);
+                    }
+            }
+            
+        }
+    }
     for (int i = 0; i < tamanho_disciplina; i++)
     {
         tamanho_3 = disciplina[i].alunos_na_disciplina.size();
@@ -442,7 +474,7 @@ int main() {
                 cin >> codigo_aluno;
                 cout << "Coloque o nome da disciplina(letras minusculas)";
                 cin >> nome_da_disciplina;
-                removerDisciplina(alunos,nome_da_disciplina,codigo_aluno);
+                removerDisciplina(alunos,disciplinas, nome_da_disciplina,codigo_aluno);
                 break;
             case 6:
                 cout << "Coloque o codigo da disciplina";
