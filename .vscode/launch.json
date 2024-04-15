@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/kauan/OneDrive/Documents/GitHub/trabalho-cupim-em-cpp",
-      "program": "c:/Users/kauan/OneDrive/Documents/GitHub/trabalho-cupim-em-cpp/build/Debug/outDebug",
+      "cwd": "c:/Users/kauan/projects/trabalho-cupim-em-cpp",
+      "program": "c:/Users/kauan/projects/trabalho-cupim-em-cpp/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

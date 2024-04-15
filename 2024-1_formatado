@@ -1,0 +1,40 @@
+ALUNOS:
+Codigo: 22063
+Nome: zielinski
+Cpf: 12345678910
+Disciplinas Cursadas: 
+-matematica
+-fisica
+
+
+
+Codigo: 22000
+Nome: thurli
+Cpf: 12345678109
+Disciplinas Cursadas: 
+-matematica
+
+
+
+DISCIPLINAS:
+Codigo: 1234
+Nome: matematica
+Professor: john
+Creditos: 10
+Alunos cursando a materia:
+-zielinski
+-thurli
+
+Codigo: 1235
+Nome: fisica
+Professor: mary
+Creditos: 9
+Alunos cursando a materia:
+-zielinski
+
+Codigo: 1236
+Nome: quimica
+Professor: bob
+Creditos: 8
+Alunos cursando a materia:
+
